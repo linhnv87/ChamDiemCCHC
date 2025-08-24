@@ -1,0 +1,38 @@
+<div class="layout-container">
+  <!-- Main Layout -->
+  <div class="layout-main">
+    <!-- Left Menu -->
+    <app-left-menu
+      [isExpanded]="isExpanded"
+      [menuItemsData]="menuItems"
+      class="layout-sidebar"
+      [class.sidebar-expanded]="isExpanded"
+      [class.sidebar-collapsed]="!isExpanded"
+    >
+    </app-left-menu>
+
+    <!-- Content Area -->
+    <div
+      class="layout-content"
+      [class.content-expanded]="isExpanded"
+      [class.content-collapsed]="!isExpanded"
+    >
+      <!-- Header -->
+      <app-header (toggleMenu)="toggleSidenav()" class="content-header"></app-header>
+
+      <!-- Main Content -->
+      <div class="content-wrapper">
+        <div class="content-inner">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="content-footer">
+        <div class="footer-content">
+          <span>Sở Nội vụ © 2024 - Hệ thống Chấm điểm CLHĐ Tỉnh Phú Thọ</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+</div>

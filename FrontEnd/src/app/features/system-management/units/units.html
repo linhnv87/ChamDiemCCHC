@@ -1,0 +1,154 @@
+<app-system-base-layout
+  title="Danh sách đơn vị tham gia khảo sát"
+  [showSearch]="showSearch"
+  (triggerSearch)="applyCombinedFilter()"
+  (clearSearch)="searchText = ''; levelFilter = null; applyCombinedFilter()"
+>
+  <ng-container ngProjectAs="header-actions">
+    @if (selection.hasValue()) {
+      <button mat-flat-button color="warn" (click)="deleteSelected()">
+        <mat-icon>delete</mat-icon>
+        Xoá đơn vị
+      </button>
+    }
+    <button mat-stroked-button color="primary" (click)="toggleSearch()">
+      <mat-icon>search</mat-icon>
+      Tìm kiếm
+    </button>
+    <button mat-flat-button color="primary" (click)="addNew()">
+      <mat-icon>add</mat-icon>
+      Thêm mới
+    </button>
+  </ng-container>
+  <ng-container ngProjectAs="search-fields">
+    <div class="search-fields">
+      <mat-form-field appearance="outline" class="field grow">
+        <mat-label>Tên đơn vị</mat-label>
+        <input
+          matInput
+          [(ngModel)]="searchText"
+          (keyup)="applyCombinedFilter()"
+          placeholder="Nhập tên/mã/đơn vị cha/cấp..."
+        />
+        @if (searchText) {
+          <button
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="searchText = ''; applyCombinedFilter()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Cấp đánh giá</mat-label>
+        <mat-select [(ngModel)]="levelFilter" (selectionChange)="applyCombinedFilter()">
+          <mat-option [value]="null">--- Chọn ---</mat-option>
+          @for (lv of LEVEL_OPTIONS; track lv) {
+            <mat-option [value]="lv">{{ lv }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <ng-container>
+    <div>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- Select Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              color="primary"
+              (change)="masterToggle()"
+              [checked]="isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [aria-label]="checkboxLabel()"
+            >
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="selection.toggle(row)"
+              [checked]="selection.isSelected(row)"
+              [aria-label]="checkboxLabel(row)"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Index Column -->
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
+          <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+        </ng-container>
+
+        <!-- Code Column -->
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã đơn vị</th>
+          <td mat-cell *matCellDef="let row">{{ row.code }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên đơn vị</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <!-- Parent Name Column -->
+        <ng-container matColumnDef="parentName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên đơn vị cha</th>
+          <td mat-cell *matCellDef="let row">{{ row.parentName }}</td>
+        </ng-container>
+
+        <!-- Level Column -->
+        <ng-container matColumnDef="level">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cấp đánh giá</th>
+          <td mat-cell *matCellDef="let row">{{ row.level }}</td>
+        </ng-container>
+
+        <!-- Actions Column at the end -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Thao tác</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-stroked-button color="primary" [matMenuTriggerFor]="actionMenu">
+              Thao tác
+              <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="onView(row)">
+                <mat-icon>visibility</mat-icon>
+                <span>Xem thông tin</span>
+              </button>
+              <button mat-menu-item (click)="onEdit(row)">
+                <mat-icon>edit</mat-icon>
+                <span>Sửa thông tin</span>
+              </button>
+              <button mat-menu-item (click)="onUpdateParent(row)">
+                <mat-icon>account_tree</mat-icon>
+                <span>Cập nhật thông tin cấp trên</span>
+              </button>
+              <button mat-menu-item (click)="onDelete(row)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Xoá</span>
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator
+        [length]="dataSource.data.length"
+        [pageSize]="20"
+        [pageSizeOptions]="[10, 20, 50]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </ng-container>
+</app-system-base-layout>

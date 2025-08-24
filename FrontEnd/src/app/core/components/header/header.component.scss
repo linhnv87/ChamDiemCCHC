@@ -1,0 +1,89 @@
+@use 'variables' as *;
+
+// Main toolbar
+.main-toolbar {
+  background: $background-white;
+  box-shadow: $shadow-light;
+  padding: 0 24px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    .menu-toggle-btn {
+      color: $text-primary;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .breadcrumb-item {
+        color: $text-secondary;
+        font-size: 14px;
+
+        &.active {
+          color: $primary-color;
+          font-weight: 500;
+        }
+      }
+
+      mat-icon {
+        color: $text-secondary;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .guide-btn {
+      border-radius: 8px;
+      font-weight: 500;
+      text-transform: none;
+
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+
+    .notification-btn,
+    .user-btn {
+      color: $text-primary;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+    }
+  }
+}
+::ng-deep.user-menu {
+  .user-name {
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    .mat-icon {
+      height: 48px;
+      width: 48px;
+      font-size: 48px;
+    }
+  }
+}

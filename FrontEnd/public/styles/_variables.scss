@@ -1,0 +1,17 @@
+// SCSS Variables
+$primary-color: var(--primary-color);
+$primary-light: var(--primary-light);
+$primary-dark: var(--primary-dark);
+$accent-color: var(--accent-color);
+$warn-color: var(--warn-color);
+$success-color: var(--success-color);
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$background-light: var(--background-light);
+$background-white: var(--background-white);
+$border-color: var(--border-color);
+
+// Shadows
+$shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.12);
+$shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.15);

@@ -1,0 +1,9 @@
+<nav class="breadcrumb" aria-label="breadcrumb" *ngIf="breadcrumbs?.length">
+  <ol>
+    <li *ngFor="let bc of breadcrumbs; let i = index; let last = last" [class.active]="last">
+      <a *ngIf="!last" (click)="navigateTo(bc.url)" role="link">{{ bc.label }}</a>
+      <span *ngIf="last">{{ bc.label }}</span>
+      <span class="separator" *ngIf="!last">/</span>
+    </li>
+  </ol>
+</nav>

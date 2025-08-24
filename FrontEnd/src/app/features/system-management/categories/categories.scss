@@ -1,0 +1,15 @@
+td.mat-column-actions,
+th.mat-column-actions {
+  text-align: center;
+}
+
+td.mat-column-actions {
+  white-space: nowrap;
+}
+
+td.mat-column-actions button {
+  margin-right: 6px;
+}
+td.mat-column-actions button:last-child {
+  margin-right: 0;
+}

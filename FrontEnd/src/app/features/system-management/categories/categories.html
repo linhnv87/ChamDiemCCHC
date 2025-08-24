@@ -1,0 +1,107 @@
+<app-system-base-layout
+  title="Danh sách dữ liệu danh mục Cấu hình hệ thống"
+  [showSearch]="showSearch"
+  (triggerSearch)="applyFilter()"
+  (clearSearch)="clearFilter()"
+>
+  <ng-container ngProjectAs="header-actions">
+    <button mat-stroked-button color="primary" (click)="toggleSearch()">
+      <mat-icon>search</mat-icon>
+      Tìm kiếm
+    </button>
+    <button mat-flat-button color="primary" (click)="addNew()">
+      <mat-icon>add</mat-icon>
+      Thêm mới
+    </button>
+    <button mat-stroked-button color="primary">
+      <mat-icon>file_upload</mat-icon>
+      Import
+    </button>
+    <button mat-stroked-button color="primary">
+      <mat-icon>grid_on</mat-icon>
+      Xuất Excel
+    </button>
+    <button mat-stroked-button color="warn" (click)="clearFilter()">
+      <mat-icon>close</mat-icon>
+      Quay lại
+    </button>
+  </ng-container>
+  <ng-container ngProjectAs="search-fields">
+    <div class="search-fields">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Tên</mat-label>
+        <input matInput [(ngModel)]="nameQuery" />
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Mã</mat-label>
+        <input matInput [(ngModel)]="codeQuery" />
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <ng-container>
+    <div>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0">
+        <!-- Index Column -->
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>STT</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- Code Column -->
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã</th>
+          <td mat-cell *matCellDef="let element">{{ element.code }}</td>
+        </ng-container>
+
+        <!-- DisplayOrder Column -->
+        <ng-container matColumnDef="displayOrder">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Thứ tự hiển thị</th>
+          <td mat-cell *matCellDef="let element">{{ element.displayOrder }}</td>
+        </ng-container>
+
+        <!-- Note Column -->
+        <ng-container matColumnDef="note">
+          <th mat-header-cell *matHeaderCellDef>Ghi chú</th>
+          <td mat-cell *matCellDef="let element">{{ element.note }}</td>
+        </ng-container>
+
+        <!-- Attachment Column -->
+        <ng-container matColumnDef="attachment">
+          <th mat-header-cell *matHeaderCellDef>File đính kèm</th>
+          <td mat-cell *matCellDef="let element">{{ element.attachment }}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Thao tác</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-stroked-button color="primary" (click)="onView(row)">
+              <mat-icon>visibility</mat-icon>
+              Xem chi tiết
+            </button>
+            <button mat-stroked-button color="primary" (click)="onEdit(row)">
+              <mat-icon>edit</mat-icon>
+              Chỉnh sửa
+            </button>
+            <button mat-stroked-button color="warn" (click)="onDelete(row)">
+              <mat-icon>delete</mat-icon>
+              Xóa
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator [pageSize]="20" [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
+      </mat-paginator>
+    </div>
+  </ng-container>
+</app-system-base-layout>

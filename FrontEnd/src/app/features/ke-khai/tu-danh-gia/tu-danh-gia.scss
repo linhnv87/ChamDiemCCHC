@@ -1,0 +1,382 @@
+.tu-danh-gia-container {
+  .page-header {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .page-title {
+      color: #d32f2f;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    .page-subtitle {
+      color: #666;
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-bottom: 20px;
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }
+
+  .content {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .assessment-section {
+    .section-header {
+      background: #1976d2;
+      color: white;
+      padding: 12px 20px;
+      margin: 0;
+
+      h2 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+
+    .assessment-tabs {
+      ::ng-deep {
+        .mat-mdc-tab-header {
+          background: #e3f2fd;
+
+          .mat-mdc-tab {
+            &.mdc-tab--active {
+              background: rgba(25, 118, 210, 0.1);
+            }
+          }
+
+          .mat-mdc-tab-label-content {
+            padding: 8px 12px;
+            text-align: center;
+            line-height: 1.2;
+          }
+        }
+
+        .mat-mdc-tab-body-wrapper {
+          padding: 0;
+        }
+      }
+    }
+
+    .tab-content {
+      padding: 0;
+    }
+
+    .table-container {
+      overflow-x: auto;
+
+      .assessment-table {
+        width: 100%;
+        border-collapse: collapse;
+
+        ::ng-deep {
+          .mat-mdc-header-row {
+            background: #4caf50;
+
+            .mat-mdc-header-cell {
+              background: #4caf50;
+              color: white;
+              font-weight: 600;
+              text-align: center;
+              padding: 12px 8px;
+              border: 1px solid #fff;
+              vertical-align: middle;
+            }
+          }
+
+          .mat-mdc-row {
+            border-bottom: 1px solid #ddd;
+
+            &.header-row {
+              background: #ffeb3b;
+
+              .mat-mdc-cell {
+                background: #ffeb3b;
+                font-weight: 600;
+                text-align: center;
+              }
+            }
+          }
+        }
+
+        .readonly-cell {
+          padding: 8px;
+          line-height: 1.4;
+        }
+
+        .input-field {
+          width: 100%;
+          margin: 0;
+
+          ::ng-deep {
+            .mat-mdc-form-field-wrapper {
+              padding-bottom: 0;
+            }
+
+            .mat-mdc-text-field-wrapper {
+              padding: 4px 8px;
+            }
+
+            .mat-mdc-form-field-subscript-wrapper {
+              display: none;
+            }
+          }
+
+          &.number-field {
+            width: 80px;
+          }
+
+          &.textarea-field {
+            ::ng-deep {
+              .mat-mdc-input-element {
+                min-height: 60px;
+                resize: vertical;
+              }
+            }
+          }
+        }
+
+        .file-upload-cell {
+          padding: 4px;
+
+          .file-upload-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .file-textarea {
+              width: 100%;
+              min-height: 80px;
+              padding: 8px;
+              border: 1px solid #ddd;
+              border-radius: 4px;
+              font-size: 12px;
+              resize: vertical;
+              font-family: inherit;
+
+              &:focus {
+                outline: none;
+                border-color: #1976d2;
+              }
+            }
+
+            .file-upload-actions {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: 4px;
+
+              .upload-btn {
+                padding: 6px 12px;
+                font-size: 12px;
+                min-height: auto;
+                line-height: 1.2;
+
+                span {
+                  cursor: pointer;
+                }
+              }
+
+              .file-note {
+                color: #666;
+                font-size: 11px;
+                font-style: italic;
+              }
+            }
+          }
+        }
+
+        .mixed-input-cell {
+          padding: 4px;
+
+          .mixed-input-content {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .text-input-section {
+              .mixed-text-input {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 12px;
+                font-family: inherit;
+
+                &:focus {
+                  outline: none;
+                  border-color: #1976d2;
+                }
+              }
+            }
+
+            .textarea-section {
+              .mixed-textarea {
+                width: 100%;
+                min-height: 60px;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 12px;
+                resize: vertical;
+                font-family: inherit;
+
+                &:focus {
+                  outline: none;
+                  border-color: #1976d2;
+                }
+              }
+            }
+
+            .file-section {
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+
+              .file-upload-actions {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+
+                .upload-btn {
+                  padding: 6px 12px;
+                  font-size: 12px;
+                  min-height: auto;
+                  line-height: 1.2;
+
+                  span {
+                    cursor: pointer;
+                  }
+                }
+
+                .file-note {
+                  color: #666;
+                  font-size: 11px;
+                  font-style: italic;
+                }
+              }
+
+              .uploaded-files {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+
+                .file-item {
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  padding: 4px 8px;
+                  background: #f5f5f5;
+                  border-radius: 4px;
+                  border: 1px solid #e0e0e0;
+
+                  .file-name {
+                    font-size: 11px;
+                    color: #333;
+                    flex: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+
+                  .remove-file-btn {
+                    width: 20px;
+                    height: 20px;
+                    padding: 0;
+                    min-width: auto;
+
+                    ::ng-deep mat-icon {
+                      font-size: 16px;
+                      width: 16px;
+                      height: 16px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .score-cell {
+          padding: 8px;
+          text-align: center;
+
+          .score-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            .score-value {
+              font-size: 14px;
+              font-weight: 600;
+              color: #1976d2;
+              padding: 4px 8px;
+              background: #e3f2fd;
+              border-radius: 4px;
+              border: 1px solid #bbdefb;
+            }
+
+            .info-btn {
+              width: 24px;
+              height: 24px;
+              padding: 0;
+              min-width: auto;
+
+              ::ng-deep mat-icon {
+                font-size: 18px;
+                width: 18px;
+                height: 18px;
+                color: #1976d2;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer {
+    padding: 20px;
+    text-align: center;
+
+    .footer-actions {
+      .save-btn {
+        background: #1976d2;
+        color: white;
+        padding: 12px 24px;
+        font-size: 16px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        mat-icon {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}

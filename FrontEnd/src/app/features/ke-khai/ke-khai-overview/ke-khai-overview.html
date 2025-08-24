@@ -1,0 +1,118 @@
+<div class="ke-khai-container">
+  <!-- Header Section -->
+  <mat-card class="header-card">
+    <mat-card-content>
+      <div class="header-info">
+        <mat-icon class="header-icon">assignment</mat-icon>
+        <span class="period-text">Thực hiện giải trình số liệu {{ testPeriod }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Score Summary Section -->
+  <div class="score-section">
+    <mat-card class="score-card self-assessment">
+      <mat-card-content>
+        <div class="score-header">
+          <h3>Điểm tự đánh giá:</h3>
+          <div class="score-value">{{ selfAssessmentScore }}/{{ maxSelfAssessmentScore }}</div>
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="getCompletionPercentage()"
+          class="score-progress"
+        >
+        </mat-progress-bar>
+        <div class="score-percentage">{{ getCompletionPercentage() }}%</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="score-card review-score">
+      <mat-card-content>
+        <div class="score-header">
+          <h3>Điểm giải trình:</h3>
+          <div class="score-value">{{ reviewScore }}/{{ maxReviewScore }}</div>
+        </div>
+        <mat-progress-bar mode="determinate" [value]="getReviewPercentage()" class="score-progress">
+        </mat-progress-bar>
+        <div class="score-percentage">{{ getReviewPercentage() }}%</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    <button matButton="filled" color="primary" class="action-btn">
+      <mat-icon>edit</mat-icon>
+      Trình số liệu để giải trình lên lãnh đạo
+    </button>
+
+    <button matButton="filled" color="primary" class="action-btn">
+      <mat-icon>visibility</mat-icon>
+      Xem lịch sử cập nhật số liệu
+    </button>
+
+    <button matButton="filled" color="primary" class="action-btn">
+      <mat-icon>history</mat-icon>
+      Lịch sử xử lý
+    </button>
+  </div>
+
+  <!-- Action Banner -->
+  <mat-card class="action-banner">
+    <mat-card-content>
+      <div class="banner-content">
+        <mat-icon class="banner-icon">info</mat-icon>
+        <span class="banner-text">Kết quả tự đánh giá</span>
+        <button mat-raised-button color="primary" class="banner-button">
+          <mat-icon>arrow_forward</mat-icon>
+          Xem số liệu
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Declaration Items List -->
+  <div class="declaration-list">
+    <div
+      *ngFor="let item of declarationItems; let i = index"
+      class="declaration-item"
+      [class.completed]="item.status === 'completed'"
+      [class.not-applicable]="item.status === 'not-applicable'"
+    >
+      <div class="item-content">
+        <div class="item-header">
+          <mat-icon [color]="getStatusColor(item.status)" class="status-icon">
+            {{ getStatusIcon(item.status) }}
+          </mat-icon>
+          <span class="item-title">{{ item.title }}</span>
+        </div>
+
+        <div class="item-details">
+          <span
+            class="item-description"
+            [class.has-data]="item.points !== undefined"
+            [class.no-data]="item.status === 'not-completed' && item.points === undefined"
+            [class.not-applicable]="item.status === 'not-applicable'"
+          >
+            {{ item.description }}
+          </span>
+
+          <mat-chip *ngIf="item.points !== undefined" class="item-chip">
+            {{ item.points }}/{{ item.maxPoints }} tiêu chí
+          </mat-chip>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Banner -->
+  <mat-card class="update-banner" (click)="onUpdateBannerClick()">
+    <mat-card-content>
+      <div class="update-content">
+        <mat-icon class="update-icon">edit</mat-icon>
+        <span class="update-text">Cập nhật số liệu tự đánh giá của đơn vị</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

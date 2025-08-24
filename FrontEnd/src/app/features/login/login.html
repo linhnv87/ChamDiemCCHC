@@ -1,0 +1,109 @@
+<div class="login-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>
+      HỆ THỐNG ĐÁNH GIÁ, XẾP LOẠI CHẤT LƯỢNG HOẠT ĐỘNG CÁC CƠ QUAN, ĐƠN VỊ TRÊN ĐỊA BÀN TỈNH PHÚ THỌ
+    </h1>
+  </div>
+
+  <!-- Login Form -->
+  <div class="login-form">
+    <div class="form-header">
+      <h2>ĐĂNG NHẬP HỆ THỐNG</h2>
+    </div>
+
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="username">Tên đăng nhập</label>
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle
+                cx="12"
+                cy="7"
+                r="4"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            [(ngModel)]="loginData.username"
+            placeholder="Nhập tên"
+            required
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mật khẩu</label>
+        <div class="input-wrapper">
+          <div class="input-icon">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="3"
+                y="11"
+                width="18"
+                height="11"
+                rx="2"
+                ry="2"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <circle cx="12" cy="16" r="1" fill="currentColor" />
+              <path
+                d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+          </div>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="loginData.password"
+            placeholder="Nhập mật khẩu"
+            required
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="!loginForm.valid || isLoading">
+        ĐĂNG NHẬP
+      </button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Đơn vị quản lý: Sở Nội vụ</p>
+    <p>Trụ sở chính: Đường Trần Phú - Phường Tân Dân - Tp. Việt Trì - tỉnh Phú Thọ</p>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<!-- Left Menu -->
+<div
+  class="left-menu"
+  [class.menu-expanded]="isExpanded"
+  [class.menu-collapsed]="!isExpanded"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+>
+  <!-- Sidenav Header -->
+  <div class="sidenav-header">
+    <div class="logo-container">
+      <div class="logo-icon">
+        <mat-icon>admin_panel_settings</mat-icon>
+      </div>
+      @if (isExpanded) {
+        <div class="logo-text">
+          <span class="logo-title">CHẤM ĐIỂM</span>
+          <span class="logo-subtitle">CLHĐ TỈNH PHÚ THỌ</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Function Button -->
+  <div class="function-button-container">
+    <button
+      mat-raised-button
+      color="primary"
+      class="function-button"
+      [class.function-button-collapsed]="!isExpanded"
+    >
+      <mat-icon>functions</mat-icon>
+      @if (isExpanded) {
+        <span>Chức năng</span>
+      }
+    </button>
+  </div>
+
+  <!-- Navigation Menu -->
+  <mat-nav-list class="nav-menu">
+    @for (item of menuItemsData; track $index) {
+      <!-- Parent Menu Item -->
+      @if (item.children?.length) {
+        <div class="menu-item-container" class="has-children">
+          <a
+            mat-list-item
+            [class.active]="item.active"
+            [class.expanded]="item.expanded"
+            class="nav-item"
+            (click)="toggleSubMenu(item, $event)"
+          >
+            <mat-icon
+              matListItemIcon
+              [class.nav-icon]="true"
+              [class.nav-icon-collapsed]="!isExpanded"
+            >
+              {{ item.icon }}
+            </mat-icon>
+            @if (isExpanded) {
+              <span matListItemTitle class="menu-label">{{ item.label }}</span>
+            }
+            @if (item.children?.length && isExpanded) {
+              <span class="menu-arrow">
+                <mat-icon>{{ item.expanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+              </span>
+            }
+          </a>
+
+          <!-- Submenu -->
+          @if (item.children?.length && (isExpanded || isShowing)) {
+            <div class="submenu" [class.show]="item.expanded">
+              <a
+                mat-list-item
+                *ngFor="let child of item.children"
+                [routerLink]="child.route"
+                routerLinkActive="active-link"
+                [class.active]="child.active"
+                class="submenu-item"
+              >
+                <span matListItemTitle class="submenu-label">{{ child.label }}</span>
+              </a>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="menu-item-container">
+          <a
+            mat-list-item
+            [routerLink]="item.route"
+            routerLinkActive="active-link"
+            [class.active]="item.active"
+            [class.expanded]="item.expanded"
+            class="nav-item"
+          >
+            <mat-icon
+              matListItemIcon
+              [class.nav-icon]="true"
+              [class.nav-icon-collapsed]="!isExpanded"
+            >
+              {{ item.icon }}
+            </mat-icon>
+            @if (isExpanded) {
+              <span matListItemTitle class="menu-label">{{ item.label }}</span>
+            }
+          </a>
+        </div>
+      }
+    }
+  </mat-nav-list>
+
+  <!-- Sidenav Footer -->
+  @if (isExpanded) {
+    <div class="sidenav-footer">
+      <mat-divider></mat-divider>
+      <div class="footer-info">
+        <mat-icon>info</mat-icon>
+        <span>Phiên bản 1.0.0</span>
+      </div>
+    </div>
+  }
+</div>

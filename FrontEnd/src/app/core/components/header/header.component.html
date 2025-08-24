@@ -1,0 +1,45 @@
+<!-- Top Toolbar -->
+<mat-toolbar class="main-toolbar">
+  <div class="toolbar-left">
+    <button mat-icon-button (click)="onToggleMenu()" class="menu-toggle-btn">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="toolbar-right">
+    <button mat-stroked-button color="primary" class="guide-btn">
+      <mat-icon>download</mat-icon>
+      Hướng dẫn sử dụng
+    </button>
+
+    <button mat-icon-button [matBadge]="0" matBadgeColor="warn" class="notification-btn">
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" class="user-btn">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #userMenu="matMenu" class="user-menu">
+      <div class="user-name">
+        <mat-icon>account_circle</mat-icon>
+        {{ userInfo?.displayName }}
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span>Thông tin cá nhân</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Cài đặt</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button (click)="onLogout()" mat-menu-item>
+        <mat-icon>logout</mat-icon>
+        <span>Đăng xuất</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

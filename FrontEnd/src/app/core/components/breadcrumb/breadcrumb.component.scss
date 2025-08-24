@@ -1,0 +1,40 @@
+.breadcrumb {
+  font-size: 14px;
+  color: #6b7280;
+  padding: 8px 0 12px;
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 6px;
+}
+
+.breadcrumb li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb a {
+  color: #2563eb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb .separator {
+  margin: 0 6px;
+  color: #9ca3af;
+}
+
+.breadcrumb li.active span {
+  color: #111827;
+  font-weight: 600;
+}

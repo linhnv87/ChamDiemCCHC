@@ -1,0 +1,344 @@
+<div class="tu-danh-gia-container">
+  <!-- Header Actions -->
+  <div class="header-actions">
+    <button matButton="filled" color="primary" class="action-btn">
+      <mat-icon>download</mat-icon>
+      Kết xuất số liệu giải trình
+    </button>
+    <button matButton="filled" color="primary" class="action-btn">
+      <mat-icon>download</mat-icon>
+      Kết xuất số liệu rà soát
+    </button>
+    <button matButton="filled" color="primary" class="action-btn">
+      <mat-icon>download</mat-icon>
+      Kết xuất số liệu kê khai
+    </button>
+    <button matButton="filled" color="primary" class="action-btn">
+      <mat-icon>arrow_back</mat-icon>
+      Quay lại
+    </button>
+  </div>
+
+  <div class="page-header">
+    <h1 class="page-title">{{ assessmentData.title }}</h1>
+    <p class="page-subtitle">{{ assessmentData.subtitle }}</p>
+  </div>
+
+  <!-- Main Content with Tabs -->
+  <div class="content">
+    <div class="assessment-section">
+      <div class="section-header">
+        <h2>KẾT QUẢ TỰ ĐÁNH GIÁ</h2>
+      </div>
+
+      <!-- Dynamic Tabs -->
+      <mat-tab-group [(selectedIndex)]="selectedTabIndex" class="assessment-tabs">
+        @for (tab of assessmentData.tabs; track tab.id; let tabIndex = $index) {
+          <mat-tab [label]="tab.title">
+            <div class="tab-content">
+              <!-- Dynamic Table -->
+              <div class="table-container">
+                <table mat-table [dataSource]="tab.rows" class="assessment-table">
+                  <!-- Dynamic Columns -->
+                  @for (column of tab.columns; track column.key) {
+                    <ng-container [matColumnDef]="column.key">
+                      <th
+                        mat-header-cell
+                        *matHeaderCellDef
+                        [style.width]="column.width"
+                        [class]="'header-' + column.key"
+                      >
+                        {{ column.label }}
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let row; let rowIndex = index"
+                        [style.width]="column.width"
+                      >
+                        <!-- Empty cell -->
+                        @if (getCellType(row, column.key) === 'empty') {
+                          <div class="empty-cell"></div>
+                        }
+
+                        <!-- Readonly text -->
+                        @if (getCellType(row, column.key) === 'readonly') {
+                          <div class="readonly-cell">
+                            {{ getCellValue(row, column.key) }}
+                          </div>
+                        }
+
+                        <!-- File input -->
+                        @if (getCellType(row, column.key) === 'text') {
+                          <div class="text-input-cell">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <input
+                                matInput
+                                [value]="getCellValue(row, column.key)"
+                                (input)="
+                                  onCellValueChange(
+                                    $any($event.target).value,
+                                    rowIndex,
+                                    column.key,
+                                    tabIndex
+                                  )
+                                "
+                              />
+                            </mat-form-field>
+                          </div>
+                        }
+
+                        <!-- Number input -->
+                        @if (getCellType(row, column.key) === 'number') {
+                          <mat-form-field appearance="outline" class="input-field number-field">
+                            <input
+                              matInput
+                              type="number"
+                              step="0.01"
+                              [value]="getCellValue(row, column.key)"
+                              (input)="
+                                onCellValueChange(
+                                  $any($event.target).value,
+                                  rowIndex,
+                                  column.key,
+                                  tabIndex
+                                )
+                              "
+                            />
+                          </mat-form-field>
+                        }
+
+                        <!-- Select dropdown -->
+                        @if (getCellType(row, column.key) === 'select') {
+                          <div class="select-cell">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <mat-select
+                                [value]="getCellValue(row, column.key)"
+                                (selectionChange)="
+                                  onCellValueChange($event.value, rowIndex, column.key, tabIndex)
+                                "
+                              >
+                                @for (option of getCellOptions(row, column.key); track option) {
+                                  <mat-option [value]="option">
+                                    {{ option }}
+                                  </mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        }
+
+                        <!-- Textarea -->
+                        @if (getCellType(row, column.key) === 'textarea') {
+                          <div class="textarea-cell">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <textarea
+                                matInput
+                                rows="3"
+                                [value]="getCellValue(row, column.key)"
+                                (input)="
+                                  onCellValueChange(
+                                    $any($event.target).value,
+                                    rowIndex,
+                                    column.key,
+                                    tabIndex
+                                  )
+                                "
+                              >
+                              </textarea>
+                            </mat-form-field>
+                          </div>
+                        }
+
+                        <!-- File upload -->
+                        @if (getCellType(row, column.key) === 'file') {
+                          <div class="file-upload-cell">
+                            <div class="file-upload-content">
+                              <textarea
+                                class="file-textarea"
+                                [value]="getCellValue(row, column.key)"
+                                (input)="
+                                  onCellValueChange(
+                                    $any($event.target).value,
+                                    rowIndex,
+                                    column.key,
+                                    tabIndex
+                                  )
+                                "
+                                placeholder="Nhập nội dung..."
+                              >
+                              </textarea>
+                              <div class="file-upload-actions">
+                                <button class="file-upload-btn">
+                                  <input
+                                    type="file"
+                                    (change)="
+                                      onMixedFileSelected($event, rowIndex, column.key, tabIndex)
+                                    "
+                                    style="display: none"
+                                    #fileInput
+                                  />
+                                  <span (click)="fileInput.click()">Tải lên</span>
+                                </button>
+                                <small class="file-note"
+                                  >Báo cáo kết quả triển khai thực hiện Đề án</small
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        }
+
+                        <!-- Mixed input (text + textarea + file) -->
+                        @if (getCellType(row, column.key) === 'mixed') {
+                          <div class="mixed-input-cell">
+                            <div class="mixed-content">
+                              <!-- Text input section -->
+                              @if (getCellValue(row, column.key)?.subFields?.text) {
+                                <div class="text-section">
+                                  <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Nhập văn bản</mat-label>
+                                    <input
+                                      matInput
+                                      [value]="getCellValue(row, column.key)?.text || ''"
+                                      (input)="
+                                        onMixedInputChange(
+                                          $any($event.target).value,
+                                          rowIndex,
+                                          column.key,
+                                          tabIndex,
+                                          'text'
+                                        )
+                                      "
+                                    />
+                                  </mat-form-field>
+                                </div>
+                              }
+
+                              <!-- Textarea section -->
+                              @if (getCellValue(row, column.key)?.subFields?.textarea) {
+                                <div class="textarea-section">
+                                  <mat-form-field appearance="outline" class="full-width">
+                                    <mat-label>Mô tả chi tiết</mat-label>
+                                    <textarea
+                                      matInput
+                                      rows="3"
+                                      [value]="getCellValue(row, column.key)?.textarea || ''"
+                                      (input)="
+                                        onMixedInputChange(
+                                          $any($event.target).value,
+                                          rowIndex,
+                                          column.key,
+                                          tabIndex,
+                                          'textarea'
+                                        )
+                                      "
+                                    >
+                                    </textarea>
+                                  </mat-form-field>
+                                </div>
+                              }
+
+                              <!-- File upload section -->
+                              @if (getCellValue(row, column.key)?.subFields?.file) {
+                                <div class="file-section">
+                                  <div class="file-upload">
+                                    <input
+                                      type="file"
+                                      #fileInput
+                                      (change)="
+                                        onMixedFileSelected($event, rowIndex, column.key, tabIndex)
+                                      "
+                                      style="display: none"
+                                    />
+                                    <button
+                                      mat-stroked-button
+                                      (click)="fileInput.click()"
+                                      class="upload-btn"
+                                    >
+                                      <mat-icon>attach_file</mat-icon>
+                                      Chọn tệp
+                                    </button>
+                                  </div>
+
+                                  <!-- Display uploaded files -->
+                                  @if (getCellValue(row, column.key)?.files?.length > 0) {
+                                    <div class="uploaded-files">
+                                      @for (
+                                        file of getCellValue(row, column.key).files;
+                                        track file.name;
+                                        let fileIndex = $index
+                                      ) {
+                                        <div class="file-item">
+                                          <span class="file-name">{{ file.name }}</span>
+                                          <button
+                                            mat-icon-button
+                                            class="remove-file-btn"
+                                            (click)="
+                                              removeMixedFile(
+                                                rowIndex,
+                                                column.key,
+                                                tabIndex,
+                                                fileIndex
+                                              )
+                                            "
+                                          >
+                                            <mat-icon>close</mat-icon>
+                                          </button>
+                                        </div>
+                                      }
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                        }
+
+                        <!-- Score display with info icon -->
+                        @if (getCellType(row, column.key) === 'score') {
+                          <div class="score-cell">
+                            <div class="score-display">
+                              <span class="score-value">{{ getCellValue(row, column.key) }}</span>
+                              <button
+                                mat-icon-button
+                                class="info-btn"
+                                matTooltip="Thông tin chi tiết về điểm số"
+                              >
+                                <mat-icon>info</mat-icon>
+                              </button>
+                            </div>
+                          </div>
+                        }
+                      </td>
+                    </ng-container>
+                  }
+
+                  <tr mat-header-row *matHeaderRowDef="getDisplayedColumns(tab.columns)"></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: getDisplayedColumns(tab.columns)"
+                    [class.header-row]="
+                      getCellValue(row, 'stt') === 'I' ||
+                      getCellValue(row, 'stt') === 'II' ||
+                      getCellValue(row, 'stt') === 'III' ||
+                      getCellValue(row, 'stt') === 'IV'
+                    "
+                  ></tr>
+                </table>
+              </div>
+            </div>
+          </mat-tab>
+        }
+      </mat-tab-group>
+    </div>
+  </div>
+
+  <!-- Footer with Save Button -->
+  <div class="footer">
+    <div class="footer-actions">
+      <button mat-raised-button color="primary" class="save-btn" (click)="saveData()">
+        <mat-icon>save</mat-icon>
+        Lưu số liệu cập nhật
+      </button>
+    </div>
+  </div>
+</div>

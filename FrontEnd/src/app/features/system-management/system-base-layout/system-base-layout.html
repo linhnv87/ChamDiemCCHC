@@ -1,0 +1,28 @@
+<div class="system-base-container">
+  <div class="header">
+    <h2>{{ title() }}</h2>
+    <div class="header-actions">
+      <ng-content select="header-actions"></ng-content>
+    </div>
+  </div>
+
+  <!-- Search panel -->
+  @if (showSearch()) {
+    <div class="search-panel">
+      <ng-content select="search-fields"></ng-content>
+      <div class="search-actions">
+        <button mat-flat-button color="primary" (click)="triggerSearch.emit()">
+          <mat-icon>search</mat-icon>
+          Tìm kiếm
+        </button>
+        <button mat-stroked-button (click)="clearSearch.emit()">
+          <mat-icon>close</mat-icon>
+          Xoá
+        </button>
+        <ng-content select="search-actions"></ng-content>
+      </div>
+    </div>
+  }
+
+  <ng-content></ng-content>
+</div>

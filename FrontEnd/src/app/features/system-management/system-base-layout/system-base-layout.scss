@@ -1,0 +1,38 @@
+.system-base-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+  .search-panel {
+    display: flex;
+    flex-direction: column;
+    ::ng-deep {
+      .search-fields {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+
+        .mat-mdc-form-field {
+          flex: 1;
+        }
+      }
+    }
+    .search-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}
